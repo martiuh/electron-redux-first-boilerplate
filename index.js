@@ -1,0 +1,1 @@
+const generarInforme = require('./generarInforme')

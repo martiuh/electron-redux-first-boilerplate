@@ -1,0 +1,20 @@
+{
+  "name": "semadmaker",
+  "version": "0.0.1",
+  "description": "Haz los reportes de SEMADET usando sólo los xml de las facturas del semestre",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "Martiuh",
+  "license": "ISC",
+  "engines": {
+    "node": "7.9.0",
+    "npm": "4.2.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "pixl-xml": "^1.0.10",
+    "xml2js": "^0.4.17"
+  }
+}
