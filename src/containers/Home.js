@@ -6,10 +6,19 @@ import { connect } from 'react-redux'
 function Home({ sendTo }) {
   return (
     <div>
-      Soy Tonatiuh
-      <Link to='/info'>
-        A Info
-      </Link>
+      <h1>Pedron</h1>
+      <div
+        className='flip-container'
+      >
+        <div className='flipper'>
+          <div className='front'>
+            Herou
+          </div>
+          <div className='back'>
+            Bye!!!!
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

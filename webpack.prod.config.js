@@ -1,8 +1,7 @@
-const liveReload = require('webpack-livereload-plugin')
 const path = require('path')
-const { HotModuleReplacementPlugin } = require('webpack')
 
 const webpackConfig = {
+  mode: 'production'
   target: 'node',
   entry: {
     bundle: [
@@ -21,15 +20,7 @@ const webpackConfig = {
       }
     ]
   },
-  devServer: {
-  	contentBase: path.join(__dirname),
-  	compress: true,
-  	port: 3000,
-  },
-  plugins: [
-    // new liveReload()
-    new HotModuleReplacementPlugin()
-  ]
+  plugins: []
 }
 
 module.exports = webpackConfig

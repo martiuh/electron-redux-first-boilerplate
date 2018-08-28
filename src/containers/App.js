@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { NOT_FOUND } from 'redux-first-router'
+import Link from 'redux-first-router-link'
 
 import Home from './Home'
 import Info from './Info'
@@ -17,7 +18,10 @@ const App = ({ page }) => {
   const Page = Routes[page]
   return (
     <div>
-      <h1>{page} con Juju</h1>
+      <nav>
+        <Link to='/home'>Home</Link>
+        <Link to ='/info'>Info</Link>
+      </nav>
       <Page />
     </div>
   )
