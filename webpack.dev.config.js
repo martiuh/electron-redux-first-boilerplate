@@ -1,24 +1,28 @@
-const path = require('path')
-const { HotModuleReplacementPlugin } = require('webpack')
+const { HotModuleReplacementPlugin, NamedModulesPlugin, NoEmitOnErrorsPlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { spawn } = require('child_process')
+const path = require('path')
 
 const port = 7000
-const publicPath = `http://localhost:${port}/dist/`
+const publicPath = `http://localhost:${port}/dist`
 
 const webpackConfig = {
-  devtool: 'inline-source-map',
+  devtool: 'eval-source-map',
   mode: 'development',
-  target: 'node',
+  target: 'electron-renderer',
+  node: {
+    __dirname: false,
+    __filename: false
+  },
   entry: [
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://localhost:${port}`,
     'webpack/hot/only-dev-server',
-    path.join(__dirname, 'src')
+    path.join(__dirname, 'src/index.js')
   ],
   output: {
     publicPath,
-    filename: 'bundle.dev.js'
+    filename: 'bundle.js'
   },
   module: {
     rules: [
@@ -26,14 +30,33 @@ const webpackConfig = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true
+          }
         }
       }
     ]
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    modules: [path.join(__dirname, 'src'), 'node_modules']
+  },
+  plugins: [
+    new HotModuleReplacementPlugin({
+      multiStep: true
+    }),
+    new NamedModulesPlugin(),
+    new NoEmitOnErrorsPlugin()
+  ],
   devServer: {
     port,
     publicPath,
+    compress: true,
+    noInfo: true,
+    stats: 'errors-only',
+    inline: true,
+    lazy: false,
     hot: true,
   	headers: { 'Access-Control-Allow-Origin': '*' },
     contentBase: path.join(__dirname, 'dist'),
@@ -47,18 +70,17 @@ const webpackConfig = {
       disableDotRule: false
     },
     before() {
-      spawn('npm', ['run', 'electron'], {
-        shell: true,
-        env: process.env,
-        stdio: 'inherit'
-      })
-      .on('close', code => process.exit(code))
-      .on('error', spawnErr => console.error(spawnErr))
+      if (!process.env.WEB) {
+        spawn('npm', ['run', 'electron'], {
+          shell: true,
+          env: process.env,
+          stdio: 'inherit'
+        })
+        .on('close', code => process.exit(code))
+        .on('error', spawnErr => console.error(spawnErr))
+      }
     }
-  },
-  plugins: [
-    new HotModuleReplacementPlugin(),
-  ]
+  }
 }
 
 module.exports = webpackConfig

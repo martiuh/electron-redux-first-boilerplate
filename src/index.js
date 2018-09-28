@@ -1,23 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import createHistory from 'history/createBrowserHistory'
-import App from './containers/App'
+import createHistory from 'history/createHashHistory'
 import { AppContainer } from 'react-hot-loader'
 
+import App from './containers/App'
 import configureStore from './configureStore'
 
 const history = createHistory()
 
 const store = configureStore(history)
 
-const render = App => {
+const render = Application => {
   const appRoot = document.getElementById('app')
 
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <App />
+        <Application />
       </Provider>
     </AppContainer>,
     appRoot
@@ -27,10 +27,9 @@ const render = App => {
 render(App)
 
 if (module.hot && process.env.NODE_ENV === 'development') {
-  module.hot.accept()
   module.hot.accept('./containers/App', () => {
-    const App = require('./containers/App').default
+    const NextApp = require('./containers/App').default
     console.log('Se dispara')
-    render(App)
+    render(NextApp)
   })
 }

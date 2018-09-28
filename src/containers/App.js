@@ -1,29 +1,61 @@
+import 'glamor/reset'
+
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { NOT_FOUND } from 'redux-first-router'
-import Link from 'redux-first-router-link'
+import { NavLink } from 'redux-first-router-link'
+import g from 'glamorous'
+import { css } from 'glamor'
 
 import Home from './Home'
-import Info from './Info'
 import NotFound from './NotFound'
+import About from './About'
 
 const Routes = {
   HOME: Home,
-  INFO: Info,
+  ABOUT: About,
   [NOT_FOUND]: NotFound
 }
 
+const Navigator = g.nav({
+  paddingTop: '10px'
+})
+
+const NavLinkStyle = css({
+  color: 'black',
+  textDecoration: 'none',
+  boxSizing: 'border-box',
+  padding: '10px'
+})
+
+
+const NavigationLink = ({ children, ...props }) => (
+  <NavLink
+    {...props}
+    {...NavLinkStyle}
+    exact
+  >
+    {children}
+  </NavLink>
+)
+
 const App = ({ page }) => {
   const Page = Routes[page]
+  const colorMapping = page === 'HOME' ? 'linear-gradient(to right, #faaca8, #ddd6f3)' : 'linear-gradient(to right, #de6262, #ffb88c)'
+
+  const Apptainer = g.div({
+    height: '100vh',
+    background: colorMapping
+  })
+
   return (
-    <div>
-      <nav>
-        <Link to='/home'>Home</Link>
-        <Link to ='/info'>Info</Link>
-      </nav>
+    <Apptainer>
+      <Navigator>
+        <NavigationLink to='/'>Home</NavigationLink>
+        <NavigationLink to='/about'>About</NavigationLink>
+      </Navigator>
       <Page />
-    </div>
+    </Apptainer>
   )
 }
 
@@ -31,8 +63,4 @@ const mapState = ({ page }) => ({
   page
 })
 
-const mapDispatch = dispatch => ({
-
-})
-
-export default connect(mapState, mapDispatch)(App)
+export default connect(mapState, null)(App)

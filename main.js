@@ -6,12 +6,17 @@ const isDev = process.env.NODE_ENV === 'development'
 
 // Mantén una referencia global del objeto ventana, si no lo haces, la ventana se
 // cerrará automáticamente cuando el objeto de JavaScript sea basura colleccionada.
-let win
+let win = null
 
 function createWindow () {
   // Crea la ventana del navegador.
-  win = new BrowserWindow({ width: 800, height: 600 })
-  isDev ? win.webContents.openDevTools() : null
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    show: false
+  })
+
+  isDev && win.webContents.openDevTools()
 
   // y carga el archivo index.html de la aplicación.
   win.loadURL(url.format({
@@ -20,6 +25,13 @@ function createWindow () {
     slashes: true
   }))
 
+  win.webContents.on('did-finish-load', () => {
+    if (!win) {
+      throw new Error('"win" is undefined')
+    }
+    win.show()
+    win.focus()
+  })
   // Abre las herramientas de desarrollo.
   // win.webContents.openDevTools()
 
