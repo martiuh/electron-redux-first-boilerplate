@@ -12,6 +12,15 @@ Simple boilerplate for starting an Electron app using:
 
 It's all packed with `webpack 4`
 
+### Get started
+
+ ```
+ git clone git@github.com:martiuh/electron-refiro.git
+ cd electron-refiro
+ yarn # npm i
+ yarn start # npm start
+ ```
+
 This boilerplate is not ready yet. Right now it only synchronous reads (in `src/configureStore.js`) the `src/directory` folder and pours the result into the state.
 
 I'm planning on do a some sort of explorer where you can only create `.txt` files and folders inside the defined folder and that's it.
