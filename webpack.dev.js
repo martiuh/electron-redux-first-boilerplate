@@ -1,7 +1,12 @@
-const { HotModuleReplacementPlugin, NamedModulesPlugin, NoEmitOnErrorsPlugin } = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 const { spawn } = require('child_process')
 const path = require('path')
+
+const {
+  HotModuleReplacementPlugin,
+  NamedModulesPlugin,
+  NoEmitOnErrorsPlugin
+} = webpack
 
 const port = 7000
 const publicPath = `http://localhost:${port}/dist`
@@ -58,7 +63,9 @@ const webpackConfig = {
     inline: true,
     lazy: false,
     hot: true,
-  	headers: { 'Access-Control-Allow-Origin': '*' },
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
     contentBase: path.join(__dirname, 'dist'),
     watchOptions: {
       aggregateTimeout: 300,
