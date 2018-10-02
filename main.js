@@ -2,13 +2,13 @@ const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const url = require('url')
 
-const isDev = process.env.NODE_ENV === 'development'
+const isProd = process.env.NODE_ENV === 'production'
 
 // Mantén una referencia global del objeto ventana, si no lo haces, la ventana se
 // cerrará automáticamente cuando el objeto de JavaScript sea basura colleccionada.
 let win = null
 
-function createWindow () {
+function createWindow() {
   // Crea la ventana del navegador.
   win = new BrowserWindow({
     width: 800,
@@ -16,11 +16,12 @@ function createWindow () {
     show: false
   })
 
-  isDev && win.webContents.openDevTools()
+  !isProd && win.webContents.openDevTools()
 
   // y carga el archivo index.html de la aplicación.
+  const indexDirection = isProd ? 'dist/index.html' : 'src/dev.html'
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
+    pathname: path.join(__dirname, indexDirection),
     protocol: 'file:',
     slashes: true
   }))

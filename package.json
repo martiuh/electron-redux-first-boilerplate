@@ -3,19 +3,25 @@
   "version": "0.0.1",
   "description": "Haz los reportes de SEMADET usando sólo los xml de las facturas del semestre",
   "main": "main.js",
+  "engines": {
+    "node": "8.11.4"
+  },
   "scripts": {
     "test": "node main.js",
-    "build": "npm run clean && webpack --config webpack.prod.config.js",
-    "web": "npm run clean && cross-env WEB=true webpack-dev-server --open --config webpack.dev.config.js",
-    "watch": "webpack --watch --config webpack.dev.config.js",
+    "build": "npm run clean && cross-env NODE_ENV=production webpack --config webpack.prod.js",
+    "web": "npm run clean && cross-env WEB=true webpack-dev-server --open --config webpack.dev.js",
+    "watch": "webpack --watch --config webpack.dev.js",
     "electron": "electron .",
-    "start": "npm run clean && cross-env NODE_ENV=development node --trace-warnings ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.dev.config.js",
-    "clean": "rimraf dist/"
+    "electron:prod": "cross-env NODE_ENV=production electron .",
+    "start": "npm run clean && cross-env NODE_ENV=development node --trace-warnings ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.dev.js",
+    "clean": "rimraf dist/",
+    "prod": "npm run build && npm run electron:prod"
   },
   "author": "Martiuh",
   "license": "ISC",
   "dependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "chokidar": "^2.0.4",
     "cross-env": "^5.2.0",
     "electron-hot-loader": "^0.8.0",
     "glamor": "^2.20.40",

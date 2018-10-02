@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { uniqueId } from './utils'
 
-const directoryPath = path.resolve(__dirname, 'src/directory')
+const directoryPath = path.join(__dirname, '..', 'workspace')
 
 export default function getContentsSync() {
   const items = fs.readdirSync(directoryPath)

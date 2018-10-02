@@ -11,7 +11,7 @@ const webpackConfig = {
   mode: 'development',
   target: 'electron-renderer',
   node: {
-    __dirname: false,
+    __dirname: false, // Important the dirname will be set where your .html file is, not where the
     __filename: false
   },
   entry: [

@@ -29,7 +29,6 @@ render(App)
 if (module.hot && process.env.NODE_ENV === 'development') {
   module.hot.accept('./containers/App', () => {
     const NextApp = require('./containers/App').default
-    console.log('Se dispara')
     render(NextApp)
   })
 }

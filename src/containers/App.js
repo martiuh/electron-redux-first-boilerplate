@@ -45,6 +45,7 @@ const App = ({ page }) => {
 
   const Apptainer = g.div({
     height: '100vh',
+    flexDirection: 'column',
     background: colorMapping
   })
 

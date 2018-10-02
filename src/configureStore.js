@@ -9,7 +9,6 @@ import reduxThunk from 'redux-thunk'
 // import persistState from 'redux-localstorage'
 
 import routesMap from './routes'
-import getContentsSync from './getContentsSync'
 import options from './options'
 import * as reducers from './reducers'
 import * as actionCreators from './actions'
@@ -31,7 +30,7 @@ export default history => {
     REDUX_THUNK
   )
 
-  const initialClientState = { files: getContentsSync() }
+  const initialClientState = {}
   const preLoadedState = { ...initialClientState }
 
   const store = createStore(rootReducer, preLoadedState, enhancers)
